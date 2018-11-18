@@ -71,7 +71,7 @@ var routes = [
    // *** STATIC ASSETS ***
 
    ['get', '/lib/(*)', cicek.file, ['../client/lib']],
-   ['get', 'client.js', cicek.file, ['../client/lib']],
+   ['get', 'client.js', cicek.file, ['../client']],
    ['get', '/', reply, lith.g ([
       ['!DOCTYPE HTML'],
       ['html', [
@@ -81,7 +81,7 @@ var routes = [
             ['title', 'Model AID'],
             ['link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat'}],
             ['link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Kadwa'}],
-            dale.do (['ionicons.min', 'pure.min'], function (v) {
+            dale.do (['ionicons.min', 'pure-min'], function (v) {
                return ['link', {rel: 'stylesheet', href: 'lib/' + v + '.css'}];
             })
          ]],
