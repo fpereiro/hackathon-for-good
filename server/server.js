@@ -68,7 +68,7 @@ var hit = function (command, cb) {
 
 var modules = dale.obj (['DPM', 'DIM', 'ARM', 'APM'], function (m) {
    return [m, function (data, cb) {
-      fs.writeFile ('input.json', m === 'DPM' ? JSON.stringify ({params: data, data: []}) : data, function (error) {
+      fs.writeFile ('input.json', m === 'DPM' ? JSON.stringify ({params: data}) : data, function (error) {
          if (error) return cb (error);
          hit (['node', '../modules/' + m + '/server.js'], function (error, data) {
             if (error) return cb (error);

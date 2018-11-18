@@ -242,7 +242,7 @@
          B.view (['Data', 'model'], {listen: [
             ['run', 'model', function (x) {
                var t = Date.now ();
-               H.authajax (x, 'post', 'run', {}, {}, function (error, data) {
+               H.authajax (x, 'post', 'run', {}, {params: B.get ('State', 'params') || {}}, function (error, data) {
                   if (error) {
                      console.log (error);
                      return B.do (x, 'notify', 'red', 'Alas! There was an error running the model.');
@@ -251,15 +251,34 @@
                   B.do (x, 'set', ['Data', 'model'], data.body);
                });
             }],
-         ]}, function (x, model) {
+         ], ondraw: function (x) {
+            if (! B.get ('Data', 'model')) B.do (x, 'run', 'model');
+         }}, function (x, model) {
+            if (! model) return;
+            var COLUMNS = ['country', 'disaster', 'probability', 'intensity', 'affected', 'damages', 'totalCost', 'aidRequired', 'need'];
             return ['div', {class: 'pure-g'}, [
-               ['div', {class: 'pure-u-1-5'}, [
-               ]],
-               ['div', {class: 'pure-u-3-5'}, [
-                  ['pre', JSON.stringify (model)],
-               ]],
-               ['div', {class: 'pure-u-1-5'}, [
+               ['div', {style: 'padding-left: 10px', class: 'pure-u-3-5'}, [
+                  ['h3', 'Expected disasters & impact'],
+                  ['table', {class: 'pure-table pure-table-striped'}, [
+                     ['tr', dale.do (COLUMNS, function (v) {return ['th', v]})],
+                     dale.do (model.data, function (v) {
+                        return ['tr', dale.do (COLUMNS, function (key) {
+                           return ['td', v [key]];
+                        })];
+                     }),
+                  ]],
+                  ['br'],
+                  ['br'],
+                  ['br'],
                   ['button', B.ev ({class: 'button'}, ['onclick', 'run', 'model']), [['i', {class: 'ion-ios-plus-outline'}], 'Run model']],
+               ]],
+               ['div', {class: 'pure-u-1-5'}, [
+                  ['br'],
+                  ['br'],
+                  ['br'],
+                  ['br'],
+                  ['br'],
+                  ['br'],
                ]],
             ]];
          }),
