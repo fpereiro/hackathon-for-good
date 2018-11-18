@@ -54,6 +54,49 @@ The model is composed by four modules:
 
 - **An aid priority module (APM)**: in an ideal world where there's sufficient access to aid funds, ARM would be enough since it specifies an estimated list of disasters with their incidences and costs. In the real world, unfortunately, aid funds are scarce and two equal disasters might receive unequal attention. APM intends to maximize the impact of the next thousand, million or billion dollars that are going to be spent in aid following the model's prescriptions. APM takes ARM data as input and adds a bias parameter, which can be based not just on current but also historical data, of which disasters (of a certain type and in a certain area) generally tend to be more neglected for political or historical reasons. In short, APM aims to predict bias in aid allocation and allow donors to maximize their impact by helping the disasters that are the most likely to be neglected. This provides both a way to generate more funds (because the impact is bigger and the case is more compelling) and a placeholder for a systematic study of aid bias, which can help treat the problem in more direct ways. An advanced APM module can also provide something even more valuable than a ponderated and debiased list of impending disasters: it can tell donors to spend the first X millions on a certain event; then the following Y millions on a different event. In other words, it can provide for an incremental list of aid interventions, measured by debiased impact.
 
+## Next steps
+
+We believe the true value of this model comes from its ability to spur challenging questions to improve the quality and quantity of highly relevant data. The modular approach also allows for vast independent yet interconnected improvement of the models used.
+
+We see two overarching next steps with great potential to put this model into practice.
+
+### StrongARM: a data initiative (6 months)
+
+The ARM module has the greatest gap between existing and potentially available data. We propose a dedicated workstream to coordinate a central database of post-disaster aid spending. Priorities would be: categorizing existing data into a standard format, leveraging historical data from individual organizations and then proposing ongoing ways of collecting and reporting standard data to feed the model going forward.
+
+With consistent and abundant data, the ARM module can then become a credible tool for performing fact-based estimations of aid needs.
+
+### End-to-end pilot (24 months)
+
+To smooth the eventual rollout of the entire model, it is necessary to understand how it can be embeded in the actual practice of the deployment of aid, from the donor to the field through all the steps in between. To achieve this, we propose identifiying a small scale regional pilot project (ideally geared to a single type of recurring catastrophe). Criteria to identify the most appropriate pilot would include: aid need and potential for impact, existing data availability, availability of stakeholders along the entire chain.
+
+### Module improvement (ongoing with initial 6 months push)
+
+Below is a list of directions for future improvements, based both on research/data (DATA) questions and on prediction models based on data (MODEL).
+
+#### Prediction (DPM)
+
+- MODEL: use of probabilistic distribution instead of point-based estimates.
+- DATA: incorporation of real time climatological and sysmic data to update forecasts: early warning system!
+- DATA: curation, publication and updates of open databases on climatologic and sysmic events.
+- DATA+MODEL: wherever available, directly query scientific models that are maintained and updated by scientific organizations.
+
+#### Impact (DIM)
+
+- MODEL: scenario analysis for extreme events to take into account cascade effects that are not taken into account in data-driven models.
+- DATA+MODEL: use of geographical information systems to assess population and infrastructure distributions and effects. Existing work (ranging from government initiatives such as RFONDEN, to hackathon projects such as the one done by our colleagues!) can be lveraged.
+
+#### Requirement (ARM)
+
+- DATA: creation of an incremental yet systematic database of the cost of aid interventions (aggregated and categorized) which will be of a fundamental nature for estimating the cost of future interventions.
+- MODEL: as consistent and sufficient data becomes available, make a paradigm shift from top-down estimation (based on historic spending) to bottom-up estimation based on granular and comparative data.
+- DATA: further study on the impact of catastrophes (i.e.: before and after) on core health and development statistics (mortality, morbility, poverty rate) to evaluate the sufficiency of aid interventions. This information not only allows for absolute measures of aid effectiveness, but it also can serve as an ongoing gauge on the quality of present and future aid interventions.
+- MODEL: use of a value-at-risk style metric to estimate the total needed funds within a given confidence level.
+
+#### Priority (APM)
+
+- MODEL: based on a combination of ARM data and studies on the quality of aid interventions, create a systematic model of aid bias which can help highlight the most neglected disasters (by disaster type, region or seasonality).
+
 ## On Implementation
 
 The implementation of the model can be done on any number of programming languages and architectures. We however choose a web application paradigm, which offers incomparable flexibility and accessibility. We believe that the possibility of accessing data and estimation models through a web browser is too compelling to ignore, particularly when the inputs to the model (and some critical parameters) can be modified on the fly by different users who can then immediately see the impact of those changes. Interactive tools can inform and persuade donors (including the general public) of the need for providing aid and how much of a difference can be made by taking action.
@@ -101,33 +144,6 @@ Part of the contribution of this work is to provide a list of datasets in CSV fo
 - ReliefWeb (2018): a list of humanitarian crises of all kinds coupled with a number of affected persons.
 
 - UNFTS Appeals Report (2008-2018): a list of aid requests combined with the amount of aid pledged and sent.
-
-## Future work
-
-We believe the true value of this model comes from its ability to spur challenging questions to improve the quality and quantity of highly relevant data. The modular approach also allows for vast independent yet interconnected improvement of the models used. Below is a list of directions for future improvements, based both on research/data (DATA) questions and on prediction models based on data (MODEL).
-
-### Prediction (DPM)
-
-- MODEL: use of probabilistic distribution instead of point-based estimates.
-- DATA: incorporation of real time climatological and sysmic data to update forecasts: early warning system!
-- DATA: curation, publication and updates of open databases on climatologic and sysmic events.
-- DATA+MODEL: wherever available, directly query scientific models that are maintained and updated by scientific organizations.
-
-### Impact (DIM)
-
-- MODEL: scenario analysis for extreme events to take into account cascade effects that are not taken into account in data-driven models.
-- DATA+MODEL: use of geographical information systems to assess population and infrastructure distributions and effects. Existing work (ranging from government initiatives such as RFONDEN, to hackathon projects such as the one done by our colleagues!) can be lveraged.
-
-### Requirement (ARM)
-
-- DATA: creation of an incremental yet systematic database of the cost of aid interventions (aggregated and categorized) which will be of a fundamental nature for estimating the cost of future interventions.
-- MODEL: as consistent and sufficient data becomes available, make a paradigm shift from top-down estimation (based on historic spending) to bottom-up estimation based on granular and comparative data.
-- DATA: further study on the impact of catastrophes (i.e.: before and after) on core health and development statistics (mortality, morbility, poverty rate) to evaluate the sufficiency of aid interventions. This information not only allows for absolute measures of aid effectiveness, but it also can serve as an ongoing gauge on the quality of present and future aid interventions.
-- MODEL: use of a value-at-risk style metric to estimate the total needed funds within a given confidence level.
-
-### Priority (APM)
-
-- MODEL: based on a combination of ARM data and studies on the quality of aid interventions, create a systematic model of aid bias which can help highlight the most neglected disasters (by disaster type, region or seasonality).
 
 ## References
 
