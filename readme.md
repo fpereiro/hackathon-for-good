@@ -115,6 +115,8 @@ An interesting question arises on who should perform validations on input data a
 
 Our current implementation of the model is of an extremely unsophisticated nature, owing to the fact that the entire work has been done in ~30 continuous hours. It, however, contains the broad strokes of the four modules we present in our model description.
 
+The modules currently use mock data. We didn't have enough time to make them retrieve information from the CSV datasets. The modules also use a very simplistic logic for estimating aid need; a more sophisticated analysis and set of modules is on an Excel spreadsheet contained in the `docs` directory.
+
 Our choice of technologies is node.js for WS; separate node.js programs for the individual modules; and a javascript frontend library for the client. Other implementations could, for example, use Python or R programs to implement the individual modules, particularly if those modules use sophisticated probabilistic functions. If some (or all) modules were to be written in a different programming language, less than 10 lines of WS code should be changed.
 
 To run the implementation, please follow these steps:
