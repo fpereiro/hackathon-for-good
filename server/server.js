@@ -15,7 +15,6 @@ var hitit  = require ('hitit');
 giz.redis  = redis;
 
 var bcrypt = require ('bcryptjs');
-var mailer = require ('nodemailer').createTransport (require ('nodemailer-ses-transport') (SECRET.ses));
 
 redis.keyscan = function (match, cb, cursor, keys) {
    if (! cursor) cursor = 0;
@@ -71,9 +70,30 @@ var routes = [
 
    // *** STATIC ASSETS ***
 
-   ['get', '/lib/(*)', cicek.file, ['lib']],
-   ['get', 'client.js', cicek.file],
-   ['get', '/', reply, view, 'html'],
+   ['get', '/lib/(*)', cicek.file, ['../client/lib']],
+   ['get', 'client.js', cicek.file, ['../client/lib']],
+   ['get', '/', reply, lith.g ([
+      ['!DOCTYPE HTML'],
+      ['html', [
+         ['head', [
+            ['meta', {charset: 'utf-8'}],
+            ['meta', {name: 'viewport', content: 'width=device-width,initial-scale=1'}],
+            ['title', 'Model AID'],
+            ['link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat'}],
+            ['link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Kadwa'}],
+            dale.do (['ionicons.min', 'pure.min'], function (v) {
+               return ['link', {rel: 'stylesheet', href: 'lib/' + v + '.css'}];
+            })
+         ]],
+         ['body', [
+            dale.do (['gotoB.min'], function (v) {
+               return ['script', {src: 'lib/' + v + '.js'}];
+            }),
+            ['script', 'var COOKIENAME = \'' + CONFIG.cookiename + '\';'],
+            ['script', {src: 'client.js'}]
+         ]]
+      ]]
+   ])],
 
 ];
 
@@ -95,4 +115,3 @@ cicek.apres = function (response) {
 cicek.cluster ();
 
 cicek.listen ({port: CONFIG.port}, routes);
-
