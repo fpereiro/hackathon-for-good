@@ -123,6 +123,7 @@ To run the implementation, please follow these steps:
 - Install git if you do not have it installed.
 - Clone the repository by entering this command at your terminal: `git clone https://github.com/fpereiro/hackathon-for-good`.
 - Enter the folder and run `npm install --no-save` to install the dependencies.
+- Enter the `server` folder.
 - Enter the command `node server`.
 - To access the client, open your browser and enter this address in the URL bar: `localhost:1444`.
 

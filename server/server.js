@@ -64,6 +64,20 @@ var hit = function (command, cb) {
    proc.on ('exit',  function (code, signal) {output.code = code; output.signal = signal; done ()});
 }
 
+// *** MODULE INTERFACES ***
+
+var modules = dale.obj (['DPM', 'DIM', 'ARM', 'APM'], function (m) {
+   return [m, function (data, cb) {
+      fs.writeFile ('input.json', m === 'DPM' ? JSON.stringify ({params: data, data: []}) : data, function (error) {
+         if (error) return cb (error);
+         hit (['node', '../modules/' + m + '/server.js'], function (error, data) {
+            if (error) return cb (error);
+            cb (null, data.out);
+         });
+      });
+   }];
+});
+
 // *** ROUTES ***
 
 var routes = [
@@ -95,6 +109,38 @@ var routes = [
       ]]
    ])],
 
+   ['post', 'run', function (rq, rs) {
+
+      var b = rq.body;
+
+      if (stop (rs, [
+         ['body', b, 'object'],
+         function () {return [
+         ]},
+      ])) return;
+
+      var cberror = function (error) {
+         reply (rs, 500, {error: error});
+      }
+
+      var sequence = ['DPM', 'DIM', 'ARM', 'APM'], counter = 0;
+
+      var Data = b;
+
+      var next = function () {
+         modules [sequence [counter++]] (Data, function (error, data) {
+            if (error) return reply (rs, 500, {error: error});
+            Data = data;
+            if (modules [sequence [counter]]) return next ();
+            fs.unlink ('input.json', function (error) {
+               if (error) return reply (rs, 500, {error: error});
+               reply (rs, 200, JSON.parse (data));
+            });
+         });
+      }
+      next ();
+   }],
+
 ];
 
 // *** LAUNCH SERVER ***
@@ -105,11 +151,11 @@ cicek.options.log.body = function (log) {
    return true;
 }
 
-cicek.apres = function (response) {
-   if (response.log.requestBody && response.log.requestBody.password) {
-      response.log.requestBody.password = '';
+cicek.apres = function (rs) {
+   if (rs.log.requestBody && rs.log.requestBody.password) {
+      rs.log.requestBody.password = '';
    }
-   cicek.Apres (response);
+   cicek.Apres (rs);
 }
 
 cicek.cluster ();

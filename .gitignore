@@ -2,4 +2,5 @@
 *.swp
 server/secret.js
 server/node_modules
+modules/*/node_modules
 server/*.log

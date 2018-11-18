@@ -76,7 +76,6 @@
       return x;
    }
 
-
    H.spaceh = function (cols) {
       var COLS = 40;
       return 100 * cols / COLS + 'vw';
@@ -191,7 +190,7 @@
                   'font-size': H.fontSize (1),
                }]
             ]],
-            ['div', B.ev ({class: 'notify'}, ['onclick', 'rem', 'State', 'notify']), notify.message],
+            ['div', B.ev ({class: 'notify bold'}, ['onclick', 'rem', 'State', 'notify']), notify.message],
          ];
       });
    }
@@ -239,13 +238,31 @@
                }],
             ]],
          ]],
-         ['div', {class: 'left float'}, [
-         ]],
-         ['div', {class: 'center float'}, [
-         ]],
-         ['div', {class: 'float', style: 'width:' + H.spaceh (4)}, [
-            ['button', B.ev ({class: 'button'}, ['onclick', 'set', ['State', 'subview'], 'upload']), [['i', {class: 'ion-ios-plus-outline'}], 'Do something']],
-         ]],
+         ['br'], ['br'],
+         B.view (['Data', 'model'], {listen: [
+            ['run', 'model', function (x) {
+               var t = Date.now ();
+               H.authajax (x, 'post', 'run', {}, {}, function (error, data) {
+                  if (error) {
+                     console.log (error);
+                     return B.do (x, 'notify', 'red', 'Alas! There was an error running the model.');
+                  }
+                  B.do (x, 'notify', 'green', 'Model run successfully in ' + (Date.now () - t) + ' ms.');
+                  B.do (x, 'set', ['Data', 'model'], data.body);
+               });
+            }],
+         ]}, function (x, model) {
+            return ['div', {class: 'pure-g'}, [
+               ['div', {class: 'pure-u-1-5'}, [
+               ]],
+               ['div', {class: 'pure-u-3-5'}, [
+                  ['pre', JSON.stringify (model)],
+               ]],
+               ['div', {class: 'pure-u-1-5'}, [
+                  ['button', B.ev ({class: 'button'}, ['onclick', 'run', 'model']), [['i', {class: 'ion-ios-plus-outline'}], 'Run model']],
+               ]],
+            ]];
+         }),
       ];
    }
 
